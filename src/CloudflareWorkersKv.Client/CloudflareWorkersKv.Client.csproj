@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <TargetFrameworks>netstandard1.4;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/aozd4v/cloudflare-workers-kv-dotnet-client/master/LICENSE</PackageLicenseUrl>
+    <PackageId>CloudflareWorkersKv.Client</PackageId>
+    <AssemblyName>CloudflareWorkersKv.Client</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="2.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+</Project>
