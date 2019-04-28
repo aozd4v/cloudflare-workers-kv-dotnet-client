@@ -1,6 +1,8 @@
 Cloudflare Workers KV Client for .NET
 ===========================
 
+![build status](https://travis-ci.org/aozd4v/cloudflare-workers-kv-dotnet-client.svg?branch=master)
+
 .NET platform compatibility
 ---------------------------
 
