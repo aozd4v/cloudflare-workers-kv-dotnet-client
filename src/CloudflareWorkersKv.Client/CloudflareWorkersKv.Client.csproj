@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Title>Cloudflare Workers KV Client</Title>
+    <PackageTags>cloudflare;workers;kv;client</PackageTags>
     <Version>0.1.0</Version>
     <TargetFrameworks>netstandard1.4;netstandard1.6;netstandard2.0</TargetFrameworks>
     <PackageLicenseUrl>https://raw.githubusercontent.com/aozd4v/cloudflare-workers-kv-dotnet-client/master/LICENSE</PackageLicenseUrl>
     <PackageId>CloudflareWorkersKv.Client</PackageId>
     <AssemblyName>CloudflareWorkersKv.Client</AssemblyName>
+    <RepositoryUrl>https://github.com/aozd4v/cloudflare-workers-kv-dotnet-client</RepositoryUrl>
+    <Authors>aozd4v</Authors>
   </PropertyGroup>
 
   <ItemGroup>
