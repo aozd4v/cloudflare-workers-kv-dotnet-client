@@ -62,6 +62,17 @@ namespace CloudflareWorkersKv.Client.Tests
         }
 
         [Fact]
+        public async Task WhenNamespaceNotFoundIsReturned_NamespaceNotFoundExceptionIsThrown()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                httpTest.RespondWith(CloudflareErrors.NamespaceNotFound, 404);
+
+                await Assert.ThrowsAsync<NamespaceNotFoundException>(async () => await Client.Read<SampleResponse>(SampleKey));
+            }
+        }
+
+        [Fact]
         public async Task WhenKeyNotFoundIsReturned_NullIsReturned()
         {
             using (var httpTest = new HttpTest())

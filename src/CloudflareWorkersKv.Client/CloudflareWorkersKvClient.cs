@@ -11,10 +11,10 @@ namespace CloudflareWorkersKv.Client
     {
         private readonly object _headers;
         private readonly string _baseUrl = "https://api.cloudflare.com/client/v4/accounts";
+        private readonly string _namespacesUrl;
         private readonly string _keyUrl;
         private readonly string _email;
         private readonly string _authKey;
-        private readonly string _accountId;
         private readonly string _namespaceId;
 
         public CloudflareWorkersKvClient(string email,
@@ -30,7 +30,8 @@ namespace CloudflareWorkersKv.Client
             };
 
             _baseUrl = $"{_baseUrl}/{accountId}";
-            _keyUrl = $"{_baseUrl}/storage/kv/namespaces/{namespaceId}/values";
+            _namespacesUrl = $"{_baseUrl}/storage/kv/namespaces/{namespaceId}";
+            _keyUrl = $"{_namespacesUrl}/values";
             _email = email;
             _authKey = authKey;
             _namespaceId = namespaceId;
@@ -55,6 +56,32 @@ namespace CloudflareWorkersKv.Client
             return responseObject;
         }
 
+        public async Task<ListResult> List(string cursor = null)
+        {
+            var url = $"{_namespacesUrl}/list";
+
+            if (!string.IsNullOrWhiteSpace(cursor))
+            {
+                url = $"{url}?cursor={cursor}";
+            }
+
+            try
+            {
+                var response = await url
+                    .WithHeaders(_headers)
+                    .GetJsonAsync<ListKeysResponse>();
+
+                return new ListResult(response.Result.Select(x => x.Name),
+                    response.ResultInfo.Cursor);
+            }
+            catch (FlurlHttpException ex)
+            {
+                await HttpExceptionHandling(ex);
+            }
+
+            return null;
+        }
+
         public async Task Write<T>(string key, T value)
         {
             var url = $"{_keyUrl}/{key}";
@@ -75,7 +102,7 @@ namespace CloudflareWorkersKv.Client
 
         private async Task HttpExceptionHandling(FlurlHttpException exception)
         {
-            var deserializationError = exception.Message.Contains(Errors.JsonDeserializationErrorMessage);
+            var deserializationError = exception.Message.Contains(Errors.JsonDeserialization);
 
             if (deserializationError)
             {
@@ -85,16 +112,24 @@ namespace CloudflareWorkersKv.Client
             var response = await exception.Call.Response.Content.ReadAsStringAsync();
             var errorResponse = JsonConvert.DeserializeObject<CloudflareErrorResponse>(response);
             var authenticationError = errorResponse.Errors.FirstOrDefault(x => x.Code == 10000);
-            var namespaceFormattingError = errorResponse.Errors.FirstOrDefault(x => x.Code == 10011);
 
             if (authenticationError != null)
             {
                 throw new UnauthorizedException();
             }
 
+            var namespaceFormattingError = errorResponse.Errors.FirstOrDefault(x => x.Code == 10011);
+
             if (namespaceFormattingError != null)
             {
                 throw new NamespaceFormattingException(namespaceFormattingError.Message);
+            }
+
+            var namespaceNotFoundError = errorResponse.Errors.FirstOrDefault(x => x.Code == 10013);
+
+            if (namespaceNotFoundError != null)
+            {
+                throw new NamespaceNotFoundException();
             }
         }
     }
