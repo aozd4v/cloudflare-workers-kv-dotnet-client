@@ -58,7 +58,7 @@ namespace CloudflareWorkersKv.Client
 
         public async Task<ListResult> List(string cursor = null)
         {
-            var url = $"{_namespacesUrl}/list";
+            var url = $"{_namespacesUrl}/keys";
 
             if (!string.IsNullOrWhiteSpace(cursor))
             {

@@ -27,7 +27,7 @@ namespace CloudflareWorkersKv.Client.Tests
                 Assert.NotNull(result.Keys.SingleOrDefault(x => x == "78"));
 
                 httpTest
-                    .ShouldHaveCalled($"{NamespacesUrl}/list?cursor={cursor}")
+                    .ShouldHaveCalled($"{NamespacesUrl}/keys?cursor={cursor}")
                     .WithVerb(HttpMethod.Get)
                     .WithHeader("Content-Type", "application/json")
                     .WithHeader("X-Auth-Email", Email)
