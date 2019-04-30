@@ -37,9 +37,25 @@ namespace CloudflareWorkersKv.Client
             _namespaceId = namespaceId;
         }
 
+        public async Task Delete(string key)
+        {
+            var url = GetKeyUrl(key);
+
+            try
+            {
+                await url
+                    .WithHeaders(_headers)
+                    .DeleteAsync();
+            }
+            catch (FlurlHttpException ex)
+            {
+                await HttpExceptionHandling(ex);
+            }
+        }
+
         public async Task<T> Read<T>(string key)
         {
-            var url = $"{_keyUrl}/{key}";
+            var url = GetKeyUrl(key);
             T responseObject = default(T);
 
             try
@@ -84,7 +100,7 @@ namespace CloudflareWorkersKv.Client
 
         public async Task Write<T>(string key, T value)
         {
-            var url = $"{_keyUrl}/{key}";
+            var url = GetKeyUrl(key);
 
             try
             {
@@ -98,6 +114,11 @@ namespace CloudflareWorkersKv.Client
             {
                 await HttpExceptionHandling(ex);
             }
+        }
+
+        private string GetKeyUrl(string key)
+        {
+            return $"{_keyUrl}/{key}";
         }
 
         private async Task HttpExceptionHandling(FlurlHttpException exception)
