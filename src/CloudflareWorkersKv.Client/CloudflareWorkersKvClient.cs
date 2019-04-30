@@ -104,11 +104,9 @@ namespace CloudflareWorkersKv.Client
 
             try
             {
-                var payload = JsonConvert.SerializeObject(value);
-
                 await url
                     .WithHeaders(_headers)
-                    .PutJsonAsync(payload);
+                    .PutJsonAsync(value);
             }
             catch (FlurlHttpException ex)
             {

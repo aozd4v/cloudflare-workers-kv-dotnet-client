@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http.Testing;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace CloudflareWorkersKv.Client.Tests
@@ -32,7 +33,8 @@ namespace CloudflareWorkersKv.Client.Tests
                     .WithVerb(HttpMethod.Put)
                     .WithHeader("Content-Type", "application/json")
                     .WithHeader("X-Auth-Email", Email)
-                    .WithHeader("X-Auth-Key", AuthKey);
+                    .WithHeader("X-Auth-Key", AuthKey)
+                    .WithRequestBody(JsonConvert.SerializeObject(_sample));
             }
         }
 
