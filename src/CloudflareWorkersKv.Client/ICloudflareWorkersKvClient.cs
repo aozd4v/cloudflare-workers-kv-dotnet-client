@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace CloudflareWorkersKv.Client
 {
-    public interface ICloudflareWorkersKvClient
+    public interface ICloudflareWorkersKvClient<T>
     {
         Task Delete(string key);
-        Task<T> Read<T>(string key);
+        Task<T> Read(string key);
         Task<ListResult> List(string cursor = null);
-        Task Write<T>(string key, T value);
+        Task Write(string key, T value);
     }
 }

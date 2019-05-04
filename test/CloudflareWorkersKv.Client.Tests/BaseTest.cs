@@ -4,7 +4,7 @@
     {
         protected readonly string Email;
         protected readonly string AuthKey;
-        protected readonly ICloudflareWorkersKvClient Client;
+        protected readonly ICloudflareWorkersKvClient<SampleResponse> Client;
         protected readonly string SampleKey;
         protected readonly string NamespacesUrl;
         protected readonly string ValidCloudflareWorkersKvUrl;
@@ -16,7 +16,7 @@
             AuthKey = "somekey";
             const string accountId = "account";
             const string namespaceId = "namespace";
-            Client = new CloudflareWorkersKvClient(Email, AuthKey, accountId, namespaceId);
+            Client = new CloudflareWorkersKvClient<SampleResponse>(Email, AuthKey, accountId, namespaceId);
             SampleKey = "sample";
             NamespacesUrl = $"https://api.cloudflare.com/client/v4/accounts/{accountId}/storage/kv/namespaces/{namespaceId}";
             ValidCloudflareWorkersKvUrl = $"{NamespacesUrl}/values/{SampleKey}";

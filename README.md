@@ -6,7 +6,7 @@ Cloudflare Workers KV Client for .NET
 .NET platform compatibility
 ---------------------------
 
-This version is compatible with .NET Standard 1.4-2.0.
+This version is compatible with .NET Standard 1.3-2.0.
 
 Quick setup
 -----------
@@ -21,4 +21,4 @@ Quick setup
 
 3. Create a new client with your credentials:
 
-        ICloudflareWorkersKvClient kvClient = new CloudflareWorkersKvClient("email", "authKey", "accountId", "namespaceId");
+        ICloudflareWorkersKvClient<MyType> kvClient = new CloudflareWorkersKvClient<MyType>("email", "authKey", "accountId", "namespaceId");

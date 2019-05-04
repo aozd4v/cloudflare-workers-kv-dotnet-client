@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace CloudflareWorkersKv.Client
 {
-    public class CloudflareWorkersKvClient : ICloudflareWorkersKvClient
+    public class CloudflareWorkersKvClient<T> : ICloudflareWorkersKvClient<T>
     {
         private readonly object _headers;
         private readonly string _baseUrl = "https://api.cloudflare.com/client/v4/accounts";
@@ -45,10 +45,10 @@ namespace CloudflareWorkersKv.Client
             }
         }
 
-        public async Task<T> Read<T>(string key)
+        public async Task<T> Read(string key)
         {
             var url = GetKeyUrl(key);
-            T responseObject = default(T);
+            var responseObject = default(T);
 
             try
             {
@@ -90,7 +90,7 @@ namespace CloudflareWorkersKv.Client
             return null;
         }
 
-        public async Task Write<T>(string key, T value)
+        public async Task Write(string key, T value)
         {
             var url = GetKeyUrl(key);
 
