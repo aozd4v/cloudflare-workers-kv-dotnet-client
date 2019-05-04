@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json;
 
@@ -13,9 +11,6 @@ namespace CloudflareWorkersKv.Client
         private readonly string _baseUrl = "https://api.cloudflare.com/client/v4/accounts";
         private readonly string _namespacesUrl;
         private readonly string _keyUrl;
-        private readonly string _email;
-        private readonly string _authKey;
-        private readonly string _namespaceId;
 
         public CloudflareWorkersKvClient(string email,
                                          string authKey,
@@ -32,9 +27,6 @@ namespace CloudflareWorkersKv.Client
             _baseUrl = $"{_baseUrl}/{accountId}";
             _namespacesUrl = $"{_baseUrl}/storage/kv/namespaces/{namespaceId}";
             _keyUrl = $"{_namespacesUrl}/values";
-            _email = email;
-            _authKey = authKey;
-            _namespaceId = namespaceId;
         }
 
         public async Task Delete(string key)
