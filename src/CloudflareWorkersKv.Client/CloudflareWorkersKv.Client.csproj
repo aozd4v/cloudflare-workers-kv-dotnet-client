@@ -4,7 +4,7 @@
     <Title>Cloudflare Workers KV Client</Title>
     <Description>Cloudflare Workers KV Client for .NET</Description>
     <PackageTags>cloudflare;workers;kv;client</PackageTags>
-    <Version>0.4.0</Version>
+    <Version>0.4.1</Version>
     <TargetFrameworks>netstandard1.3;netstandard1.4;netstandard1.6;netstandard2.0</TargetFrameworks>
     <PackageLicenseUrl>https://raw.githubusercontent.com/aozd4v/cloudflare-workers-kv-dotnet-client/master/LICENSE</PackageLicenseUrl>
     <PackageId>CloudflareWorkersKv.Client</PackageId>

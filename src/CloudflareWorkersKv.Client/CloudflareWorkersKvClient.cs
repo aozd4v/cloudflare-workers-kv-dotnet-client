@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Newtonsoft.Json;
@@ -79,8 +80,14 @@ namespace CloudflareWorkersKv.Client
                     .WithHeaders(_headers)
                     .GetJsonAsync<ListKeysResponse>();
 
-                return new ListResult(response.Result.Select(x => x.Name),
-                    response.ResultInfo.Cursor);
+                var keys = new List<string>();
+
+                foreach (var result in response.Result)
+                {
+                    keys.Add(result.Name);
+                }
+
+                return new ListResult(keys, response.ResultInfo.Cursor);
             }
             catch (FlurlHttpException ex)
             {
