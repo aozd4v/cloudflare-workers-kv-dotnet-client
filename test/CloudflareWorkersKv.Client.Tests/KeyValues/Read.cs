@@ -32,8 +32,8 @@ namespace CloudflareWorkersKv.Client.Tests.KeyValues
         [Fact]
         public async Task WhenReadingSuccessfully_ButResponseCantBeDeserialized_ThenExceptionIsThrown()
         {
-            var client = new CloudflareWorkersKvClient<int>(string.Empty, string.Empty, string.Empty,
-                string.Empty);
+            var client = new CloudflareWorkersKvClient<int>("email", "key", "account",
+                "namespace");
 
             using (var httpTest = new HttpTest())
             {
