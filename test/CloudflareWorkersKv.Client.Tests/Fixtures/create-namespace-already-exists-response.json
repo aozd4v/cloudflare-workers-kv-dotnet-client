@@ -1,0 +1,11 @@
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 10014,
+      "message": "a namespace with this account ID and title already exists"
+    }
+  ],
+  "messages": []
+}

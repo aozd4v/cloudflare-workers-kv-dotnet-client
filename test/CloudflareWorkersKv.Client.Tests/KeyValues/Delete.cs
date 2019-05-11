@@ -1,40 +1,31 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
+using CloudflareWorkersKv.Client.Exceptions;
 using Flurl.Http.Testing;
-using Newtonsoft.Json;
 using Xunit;
 
-namespace CloudflareWorkersKv.Client.Tests
+namespace CloudflareWorkersKv.Client.Tests.KeyValues
 {
-    public class Write : BaseTest
+    public class Delete : BaseTest
     {
-        private readonly SampleResponse _sample;
-
-        public Write()
-        {
-            _sample = new SampleResponse
-            {
-                Cost = 1.99m,
-                Name = "test"
-            };
-        }
-
         [Fact]
-        public async Task WhenWritingSuccessfully_RequestShouldBeConstructedCorrectly()
+        public async Task WhenDeletingSuccessfully_RequestShouldBeConstructedCorrectly()
         {
+            var response = await File.ReadAllTextAsync("./Fixtures/generic-success-response.json");
+
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(SampleResponse, 200);
+                httpTest.RespondWith(response, 200);
 
-                await Client.Write(SampleKey, _sample);
+                await Client.KeyValues.Delete(SampleKey);
 
                 httpTest
                     .ShouldHaveCalled(ValidCloudflareWorkersKvUrl)
-                    .WithVerb(HttpMethod.Put)
+                    .WithVerb(HttpMethod.Delete)
                     .WithHeader("Content-Type", "application/json")
                     .WithHeader("X-Auth-Email", Email)
-                    .WithHeader("X-Auth-Key", AuthKey)
-                    .WithRequestBody(JsonConvert.SerializeObject(_sample));
+                    .WithHeader("X-Auth-Key", AuthKey);
             }
         }
 
@@ -45,7 +36,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.AuthenticationError, 403);
 
-                await Assert.ThrowsAsync<UnauthorizedException>(async () => await Client.Write(SampleKey, _sample));
+                await Assert.ThrowsAsync<UnauthorizedException>(async () => await Client.KeyValues.Delete(SampleKey));
             }
         }
 
@@ -56,7 +47,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.NamespaceFormattingError, 400);
 
-                await Assert.ThrowsAsync<NamespaceFormattingException>(async () => await Client.Write(SampleKey, _sample));
+                await Assert.ThrowsAsync<NamespaceFormattingException>(async () => await Client.KeyValues.Delete(SampleKey));
             }
         }
 
@@ -67,7 +58,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.NamespaceNotFound, 404);
 
-                await Assert.ThrowsAsync<NamespaceNotFoundException>(async () => await Client.Write(SampleKey, _sample));
+                await Assert.ThrowsAsync<NamespaceNotFoundException>(async () => await Client.KeyValues.Delete(SampleKey));
             }
         }
     }

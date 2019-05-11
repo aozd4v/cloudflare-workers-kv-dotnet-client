@@ -7,15 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fixtures\delete-key-successful-response.json" />
+    <None Remove="Fixtures\create-namespace-already-exists-response.json" />
+    <None Remove="Fixtures\generic-success-response.json" />
     <None Remove="Fixtures\list-keys-response.json" />
+    <None Remove="Fixtures\list-namespaces-response.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Fixtures\delete-key-successful-response.json">
+    <Content Include="Fixtures\create-namespace-already-exists-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\generic-success-response.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Fixtures\list-keys-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\list-namespaces-response.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CloudflareWorkersKv.Client
+namespace CloudflareWorkersKv.Client.Models.KeyValues
 {
     public class ListResult
     {

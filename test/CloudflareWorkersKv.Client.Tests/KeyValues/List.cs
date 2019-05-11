@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CloudflareWorkersKv.Client.Exceptions;
 using Flurl.Http.Testing;
 using Xunit;
 
-namespace CloudflareWorkersKv.Client.Tests
+namespace CloudflareWorkersKv.Client.Tests.KeyValues
 {
     public class List : BaseTest
     {
@@ -19,7 +20,7 @@ namespace CloudflareWorkersKv.Client.Tests
                 httpTest.RespondWith(response, 200);
 
                 const string cursor = "somecursor";
-                var result = await Client.List(cursor);
+                var result = await Client.KeyValues.List(cursor);
                 var count = result.Keys.Distinct().Count();
 
                 Assert.Equal(1000, count);
@@ -27,7 +28,7 @@ namespace CloudflareWorkersKv.Client.Tests
                 Assert.NotNull(result.Keys.SingleOrDefault(x => x == "78"));
 
                 httpTest
-                    .ShouldHaveCalled($"{NamespacesUrl}/keys?cursor={cursor}")
+                    .ShouldHaveCalled($"{NamespaceUrl}/keys?cursor={cursor}")
                     .WithVerb(HttpMethod.Get)
                     .WithHeader("Content-Type", "application/json")
                     .WithHeader("X-Auth-Email", Email)
@@ -42,7 +43,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.AuthenticationError, 403);
 
-                await Assert.ThrowsAsync<UnauthorizedException>(async () => await Client.List());
+                await Assert.ThrowsAsync<UnauthorizedException>(async () => await Client.KeyValues.List());
             }
         }
 
@@ -53,7 +54,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.NamespaceFormattingError, 400);
 
-                await Assert.ThrowsAsync<NamespaceFormattingException>(async () => await Client.List());
+                await Assert.ThrowsAsync<NamespaceFormattingException>(async () => await Client.KeyValues.List());
             }
         }
 
@@ -64,7 +65,7 @@ namespace CloudflareWorkersKv.Client.Tests
             {
                 httpTest.RespondWith(CloudflareErrors.NamespaceNotFound, 404);
 
-                await Assert.ThrowsAsync<NamespaceNotFoundException>(async () => await Client.List());
+                await Assert.ThrowsAsync<NamespaceNotFoundException>(async () => await Client.KeyValues.List());
             }
         }
     }

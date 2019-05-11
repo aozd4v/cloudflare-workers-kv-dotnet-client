@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudflareWorkersKv.Client
+namespace CloudflareWorkersKv.Client.Exceptions
 {
     public class UnauthorizedException : Exception
     {

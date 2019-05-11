@@ -1,6 +1,6 @@
-﻿namespace CloudflareWorkersKv.Client
+﻿namespace CloudflareWorkersKv.Client.Models
 {
-    internal class ListKeysResultInfo
+    internal class ResultInfo
     {
         public long Count { get; set; }
         public string Cursor { get; set; }

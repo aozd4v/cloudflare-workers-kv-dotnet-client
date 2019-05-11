@@ -1,4 +1,4 @@
-﻿namespace CloudflareWorkersKv.Client
+﻿namespace CloudflareWorkersKv.Client.Models.KeyValues
 {
     internal class ListKeysResult
     {
