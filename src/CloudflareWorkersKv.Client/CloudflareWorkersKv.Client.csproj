@@ -13,7 +13,15 @@
     <Authors>aozd4v</Authors>
     <PackageProjectUrl>https://github.com/aozd4v/cloudflare-workers-kv-dotnet-client</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/aozd4v/cloudflare-workers-kv-dotnet-client/master/logo/logo.png</PackageIconUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Flurl.Http" Version="2.4.1" />
